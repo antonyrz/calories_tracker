@@ -1,4 +1,5 @@
-import { act, useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 import { categories } from "../data/categories";
 
 export default function Form() {
@@ -9,8 +10,15 @@ export default function Form() {
         calories: 0
     });
 
-    const handleChange = () => {
-        
+    const handleChange = (e : ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+
+        const key = e.target.id;
+        const value = e.target.value;
+
+        setActivity({
+            ...activity,
+            [key]: value
+        })
     }
 
   return (
@@ -23,7 +31,6 @@ export default function Form() {
                 onChange={handleChange}
                 name="" id="category"
                 className="border border-slate-300 p-2 rounded-lg w-full bg-white">
-                        <option disabled defaultValue={} value="">-- Seleccione --</option>
                     {categories.map((category) => (
                         <option 
                             key={category.id}
@@ -37,24 +44,24 @@ export default function Form() {
             <div className="grid gap-3">
                 <label htmlFor="activity" className="font-bold">Actividad:</label>
                 <input 
-                onChange={handleChange}
-                value={activity.name}
                 className="border border-slate-300 p-2 rounded-lg"
                 type="text"
-                id="activity"
+                id="name"
                 placeholder="Ej. Comida, Jugo de Naranja, Ensalada, Ejercicio, Pesas, Bicicleta"
+                value={activity.name}
+                onChange={handleChange}
                 />
             </div>
 
              <div className="grid gap-3">
                 <label htmlFor="calories" className="font-bold">Calorías:</label>
                 <input 
-                onChange={handleChange}
-                value={activity.calories}
                 className="border border-slate-300 p-2 rounded-lg"
                 type="number"
                 id="calories"
                 placeholder="Ej. 300 o 500"
+                value={activity.calories}
+                onChange={handleChange}
                 />
             </div>
 
