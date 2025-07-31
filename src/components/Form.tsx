@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { categories } from "../data/categories";
 import type { Activity } from "../types";
@@ -11,6 +11,8 @@ export default function Form() {
         calories: 0
     });
 
+    const [submitText, setSubmitText] = useState('');
+
     const handleChange = (e : ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
 
         const input = e.target.id;
@@ -22,9 +24,27 @@ export default function Form() {
             ...activity,
             [input]: isNumberField ? +value : value
         });
-
-        console.log(activity)
     }
+
+    const isValidActivity = () => {
+        const {name, calories} = activity;
+        return name.trim() !== '' && calories > 0
+    };
+
+    useEffect(() => {
+
+        let textSubmit = '';
+
+        categories.forEach(category => {
+            if(category.id === activity.category){
+                textSubmit = `Guardar ${category.name}`;
+            };
+        });
+
+        setSubmitText(textSubmit);
+
+    }, [activity.category]);
+
 
   return (
     <>
@@ -38,6 +58,7 @@ export default function Form() {
                 className="border border-slate-300 p-2 rounded-lg w-full bg-white">
                     {categories.map((category) => (
                         <option 
+                            id={category.name}
                             key={category.id}
                             value={category.id}>
                             {category.name}
@@ -71,9 +92,12 @@ export default function Form() {
             </div>
 
             <input 
+            id="submit-form"
             type="submit" 
-            className="bg-gray-800 hover:bg-gray-900 w-full p-2 text-white font-bold uppercase cursor-pointer"
-            value='Guardar comida o ejercicio'
+            className="bg-gray-800 hover:bg-gray-900 w-full disabled:opacity-10 disabled:cursor-auto p-2 text-white font-bold uppercase cursor-pointer"
+            value={submitText}
+            disabled={!isValidActivity()}
+
             />
         </form>
     </>
