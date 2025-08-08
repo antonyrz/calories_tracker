@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { categories } from "../data/categories";
 import type { Activity } from "../types";
 
@@ -46,9 +46,18 @@ export default function Form() {
     }, [activity.category]);
 
 
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        console.log("enviando formulario")
+    };
+
   return (
     <>
-        <form action="" className="space-y-5 bg-white shadow p-10 rounded-lg">
+        <form 
+            action="" className="space-y-5 bg-white shadow p-10 rounded-lg"
+            onSubmit={handleSubmit}
+        >
             <div className="grid gap-3">
                 <label htmlFor="category" className="font-bold">Categoría:</label>
                 <select 
