@@ -5,11 +5,11 @@ export type ActivityActions =
 
 type ActivityState = {
     activities : Activity[]
-}
+};
 
 export const initialState : ActivityState = {
     activities: []
-}
+};
 
 export const activityReducer = (
         state: ActivityState = initialState,
@@ -18,8 +18,12 @@ export const activityReducer = (
     
         if(action.type === 'save-activity'){
             /// Este codigo maneja la logica para actualizar el state
-            console.log('holaxed')
-        }
+
+            return{
+                ...state,
+                activities: [...state.activities, action.payload.newActivity]
+            }
+        };
 
         return state;
-}
+};

@@ -1,5 +1,6 @@
-import { useEffect, useState, Dispatch } from "react";
-import type { ChangeEvent, FormEvent } from "react";
+import { useEffect, useState} from "react";
+import {v4 as uuidv4} from "uuid";
+import type { ChangeEvent, FormEvent, Dispatch } from "react";
 import { categories } from "../data/categories";
 import type { Activity } from "../types";
 import type { ActivityActions } from "../reducers/activity-reducer";
@@ -8,13 +9,16 @@ type FormProps = {
     dispatch: Dispatch<ActivityActions>
 };
 
+const initialState : Activity = {
+    id: uuidv4(),
+    category: 1,
+    name: '',
+    calories: 0
+};
+
 export default function Form({dispatch} : FormProps ) {
 
-    const [activity, setActivity] = useState<Activity>({
-        category: 1,
-        name: '',
-        calories: 0
-    });
+    const [activity, setActivity] = useState<Activity>(initialState);
 
     const [submitText, setSubmitText] = useState('');
 
@@ -29,7 +33,7 @@ export default function Form({dispatch} : FormProps ) {
             ...activity,
             [input]: isNumberField ? +value : value
         });
-    }
+    };
 
     const isValidActivity = () => {
         const {name, calories} = activity;
@@ -55,6 +59,8 @@ export default function Form({dispatch} : FormProps ) {
         e.preventDefault();
 
         dispatch({type : 'save-activity', payload: {newActivity: activity}});
+
+        setActivity({...initialState, id: uuidv4()})
     };
 
   return (
@@ -67,7 +73,7 @@ export default function Form({dispatch} : FormProps ) {
                 <label htmlFor="category" className="font-bold">Categoría:</label>
                 <select 
                 value={activity.category}
-                onChange={handleChange}
+                onChange={(handleChange)}
                 name="" id="category"
                 className="border border-slate-300 p-2 rounded-lg w-full bg-white">
                     {categories.map((category) => (
