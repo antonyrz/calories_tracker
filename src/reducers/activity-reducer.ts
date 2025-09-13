@@ -1,14 +1,24 @@
 import type { Activity } from "../types";
 
 export type ActivityActions = 
-    {type: 'save-activity', payload: {newActivity : Activity}}
+    {type: 'save-activity', payload: {newActivity : Activity}} |
+    {type: 'edit-activity', payload: {activity : Activity}}
 
 type ActivityState = {
-    activities : Activity[]
+    activities : Activity[],
+    activityEdit : Activity
 };
 
+const initialActivityEdit = {
+        id: '',
+        category: 1,
+        name: '',
+        calories: 0, 
+}
+
 export const initialState : ActivityState = {
-    activities: []
+    activities: [],
+    activityEdit: initialActivityEdit
 };
 
 export const activityReducer = (
@@ -19,10 +29,29 @@ export const activityReducer = (
         if(action.type === 'save-activity'){
             /// Este codigo maneja la logica para actualizar el state
 
+            const actualActivity = action.payload.newActivity;
+            const activityExists = state.activities.some(activity => activity.id === action.payload.newActivity.id);
+            let updatedActivities : Activity[] = [];
+
+            if(activityExists){
+                updatedActivities = state.activities.map(activity => activity.id === actualActivity.id ? actualActivity : activity);
+
+            }else{
+                updatedActivities = [...state.activities, actualActivity];
+            };
+            
             return{
                 ...state,
-                activities: [...state.activities, action.payload.newActivity]
-            }
+                activities: updatedActivities,
+                activityEdit: initialActivityEdit
+           };
+        };
+
+        if(action.type === "edit-activity"){
+            return{
+                ...state,
+                activityEdit: action.payload.activity
+            };
         };
 
         return state;
