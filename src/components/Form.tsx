@@ -110,7 +110,7 @@ export default function Form({dispatch, activityEdit} : FormProps ) {
              <div className="grid gap-3">
                 <label htmlFor="calories" className="font-bold">Calorías:</label>
                 <input 
-                className="border border-slate-300 p-2 rounded-lg"
+                className="border border-slate-300 p-2 rounded-lg input-number [appearance:textfield] &::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 type="number"
                 id="calories"
                 placeholder="Ej. 300 o 500"

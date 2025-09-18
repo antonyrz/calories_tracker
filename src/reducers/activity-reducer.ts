@@ -2,11 +2,12 @@ import type { Activity } from "../types";
 
 export type ActivityActions = 
     {type: 'save-activity', payload: {newActivity : Activity}} |
-    {type: 'edit-activity', payload: {activity : Activity}}
+    {type: 'edit-activity', payload: {activity : Activity}} |
+    {type: 'delete-activity', payload: {idActivity: Activity['id']}}
 
 type ActivityState = {
     activities : Activity[],
-    activityEdit : Activity
+    activityEdit : Activity,
 };
 
 const initialActivityEdit = {
@@ -51,6 +52,15 @@ export const activityReducer = (
             return{
                 ...state,
                 activityEdit: action.payload.activity
+            };
+        };
+
+        if(action.type === "delete-activity"){
+
+            console.log(`eliminando...`, action.payload.idActivity);
+
+            return{
+                ...state
             };
         };
 
