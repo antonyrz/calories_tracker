@@ -3,7 +3,8 @@ import type { Activity } from "../types";
 export type ActivityActions = 
     {type: 'save-activity', payload: {newActivity : Activity}} |
     {type: 'edit-activity', payload: {activity : Activity}} |
-    {type: 'delete-activity', payload: {idActivity: Activity['id']}}
+    {type: 'delete-activity', payload: {idActivity: Activity['id']}} |
+    {type: 'restart-app'}
 
 type ActivityState = {
     activities : Activity[],
@@ -17,8 +18,13 @@ const initialActivityEdit = {
         calories: 0, 
 }
 
+const localStorageActivities = () : Activity[] => {
+    const activites = localStorage.getItem('activities');
+    return activites ? JSON.parse(activites) : [];
+};
+
 export const initialState : ActivityState = {
-    activities: [],
+    activities: localStorageActivities(),
     activityEdit: initialActivityEdit
 };
 
@@ -61,6 +67,16 @@ export const activityReducer = (
             return{
                 ...state,
                 activities: state.activities.filter(activity => activity.id !== action.payload.idActivity),
+            };
+        };
+
+        if(action.type === 'restart-app'){
+
+            console.log('xddd')
+
+            return{
+                activities: [],
+                activityEdit: initialActivityEdit
             };
         };
 
