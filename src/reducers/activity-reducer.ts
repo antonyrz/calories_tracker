@@ -1,3 +1,4 @@
+import ActivityList from "../components/ActivityList";
 import type { Activity } from "../types";
 
 export type ActivityActions = 
@@ -20,10 +21,22 @@ const initialActivityEdit = {
 }
 
 const localStorageActivities = () : Activity[] => {
-    const activites = localStorage.getItem('activities');
+    const activitiesLocalStorage = localStorage.getItem('activities');
 
+    if(activitiesLocalStorage){
+        const activities = JSON.parse(activitiesLocalStorage);
 
-    return activites ? JSON.parse(activites) : [];
+        const activitiesFormateado = activities.map((activity : Activity)  => {
+            return{
+                ...activity,
+                date: new Date(activity.date)
+            }
+        })
+
+       return activitiesFormateado
+    }else{
+        return []
+    };
 };
 
 export const initialState : ActivityState = {

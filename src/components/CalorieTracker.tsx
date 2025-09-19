@@ -8,7 +8,7 @@ type CalorieTrackerProps = {
 
 export default function CalorieTracker({activities} : CalorieTrackerProps) {
 
-    // Contadores
+
     const caloriesConsumed = useMemo(() => activities.reduce((totalCalories, actividad) => actividad.category === 1 ? totalCalories + actividad.calories : totalCalories, 0), [activities]);
 
     const caloriesBurned = useMemo(() => activities.reduce((totalCalories, actividad) => actividad.category === 2 ? totalCalories + actividad.calories : totalCalories, 0), [activities]);
