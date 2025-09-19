@@ -11,11 +11,13 @@ type FormProps = {
     activityEdit: Activity
 };
 
+
 const initialActivity : Activity = {
     id: uuidv4(),
     category: 1,
     name: '',
-    calories: 0
+    calories: 0,
+    date: new Date(),
 };
 
 

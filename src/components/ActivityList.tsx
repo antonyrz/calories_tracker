@@ -49,6 +49,12 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
           });
     };
 
+    function formatearDate(fecha : Activity['date']){
+        const fechaFormateada = fecha.toLocaleDateString();
+
+        return fechaFormateada;
+    }
+
   return (
     <>
         <h2 className="text-4xl font-bold text-slate-600 text-center">Comida y Actividades</h2>
@@ -75,6 +81,8 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
                                     {activity.calories} {''}
                                     <span>Calorias</span>
                                 </p>
+
+                                <p>{formatearDate(activity.date)}</p>
                             </div>
 
                             <div className="flex gap-5 items-center">

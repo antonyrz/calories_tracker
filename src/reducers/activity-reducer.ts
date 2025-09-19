@@ -15,11 +15,14 @@ const initialActivityEdit = {
         id: '',
         category: 1,
         name: '',
-        calories: 0, 
+        calories: 0,
+        date: new Date()
 }
 
 const localStorageActivities = () : Activity[] => {
     const activites = localStorage.getItem('activities');
+
+
     return activites ? JSON.parse(activites) : [];
 };
 
