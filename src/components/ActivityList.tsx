@@ -82,7 +82,7 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
                                     <span>Calorias</span>
                                 </p>
 
-                                <p>{formatearDate(activity.date)}</p>
+                                <p className="text-gray-400 font-bold">{formatearDate(activity.date)}</p>
                             </div>
 
                             <div className="flex gap-5 items-center">
@@ -97,7 +97,6 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
                                     <XCircleIcon
                                         className="cursor-pointer h-8 w-8 text-red-800"
                                         onClick={() => confirmDelete(activity.id)}
-                                    //  onClick={() => dispatch({type: 'delete-activity', payload: {idActivity: activity.id}})}
                                     />
                                 </button>
                             </div>

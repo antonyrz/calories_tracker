@@ -1,4 +1,3 @@
-import ActivityList from "../components/ActivityList";
 import type { Activity } from "../types";
 
 export type ActivityActions = 
